@@ -1,85 +1,60 @@
-cube([20, 40, 1], center=true);
+// ISUE 2016
 
-// cam 1
-translate([-30, 0, 0]) {
-difference() {
-  $fn=50;
-  minkowski() {
-    cube([40, 40, 1], center=true);
-    //cylinder(r=2,h=.5);
-  }
-  translate([0,0,-1]) {
-    cylinder(r=14, h=4);
-  }
-}
-  
-translate([14, 14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
+//constants
+thickness   = 4;
+ipd         = 68;               // change to your ipd
+half_ipd    = ipd/2;
+cam_width   = 40;
+post_height = 16;
 
-translate([-14, -14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
+cube([ipd - cam_width, 40, thickness], center=true);
 
-translate([14, -14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
+// left cam
+translate([-half_ipd, 0, 0]) {
+    difference() {
+      $fn=50;
+      minkowski() {
+        cube([cam_width, cam_width, thickness], center=true);
+      }
+      translate([0,0,-(thickness/2 + 1)]) {
+        cylinder(r=14, h=thickness + 2);
+      }
+    }
 
-translate([-14, 14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
+    // left posts
+    for (i = [-1 : 2 : 1]) {
+        for (j = [-1 : 2 : 1]) {
+            translate([i*14,j*14, .4]) {
+                difference() {
+                    cylinder(h = post_height, r = 3, $fs=.5);
+                    cylinder(h = post_height + 1, r = 1, $fs=.5);
+                }
+            }
+        }
+    }
 }
 
-// Cam 2
-translate([30, 0, 0]) {
-difference() {
-  $fn=50;
-  minkowski() {
-    cube([40, 40, 1], center=true);
-    //cylinder(r=2,h=.5);
-  }
-  translate([0,0,-1]) {
-    cylinder(r=14, h=4);
-  }
-}
+// right cam
+translate([half_ipd, 0, 0]) {
+    difference() {
+      $fn=50;
+      minkowski() {
+        cube([cam_width, cam_width, thickness], center=true);
+      }
+      translate([0,0,-(thickness/2 + 1)]) {
+        cylinder(r=14, h=thickness + 2);
+      }
+    }
 
-translate([14, 14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
-
-translate([-14, -14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
-
-translate([14, -14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
-
-translate([-14, 14, .4]) {
-  difference() {
-    cylinder(h = 16, r = 3, $fs=.5);
-    cylinder(h = 16, r = 1, $fs=.5);
-  }
-}
+    // right posts
+    for (i = [-1 : 2 : 1]) {
+        for (j = [-1 : 2 : 1]) {
+            translate([i*14,j*14, .4]) {
+                difference() {
+                    cylinder(h = post_height, r = 3, $fs=.5);
+                    cylinder(h = post_height + 1, r = 1, $fs=.5);
+                }
+            }
+        }
+    }
 }
